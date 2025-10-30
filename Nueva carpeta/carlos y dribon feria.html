@@ -1,0 +1,626 @@
+ <!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Proyecto de Investigación – David y Carlos, 9° grado</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1: #0f172a; /* dark navy */
+      --accent1: #7c3aed; /* purple */
+      --accent2: #06b6d4; /* teal */
+      --card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.06);
+      --text: #e6eef8;
+      --muted: #bcd3ea;
+      --container-w: 1000px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #071024 0%, #071130 45%, #071130 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    /* Top navigation */
+    .topbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 20px;
+      gap:16px;
+      backdrop-filter: blur(6px) saturate(120%);
+      background: linear-gradient(90deg, rgba(12,18,40,0.55), rgba(10,12,30,0.35));
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      z-index:1000;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:12px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:white;
+      font-size:18px;
+      box-shadow: 0 6px 18px rgba(12,8,40,0.6);
+    }
+    .brand h1{
+      margin:0;
+      font-size:16px;
+      letter-spacing:0.2px;
+      font-weight:700;
+      color:var(--text);
+    }
+    .brand p{
+      margin:0;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    nav.nav{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    nav.nav a{
+      color:var(--muted);
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:8px;
+      font-size:14px;
+      transition: all .18s ease;
+    }
+    nav.nav a:hover{
+      color:var(--text);
+      transform:translateY(-2px);
+      background: rgba(255,255,255,0.02);
+    }
+    nav.nav a.active{
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      color:var(--text);
+      box-shadow: 0 6px 18px rgba(12,8,40,0.5);
+    }
+
+    /* Page container */
+    .wrap{
+      max-width:var(--container-w);
+      margin:110px auto 80px;
+      padding:24px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      align-items:center;
+      margin-bottom:26px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      padding:22px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .title-big{
+      font-size:20px;
+      margin:0 0 6px 0;
+      font-weight:800;
+      color: #f7fbff;
+      letter-spacing:0.2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Sections */
+    section{
+      margin-top:20px;
+      scroll-margin-top:96px; /* account for fixed navbar */
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:16px;
+      font-weight:700;
+      color: #eaf3ff;
+    }
+    .section-title .dot{
+      width:12px;height:12px;border-radius:50%;
+      background: linear-gradient(135deg,var(--accent1),var(--accent2));
+      box-shadow: 0 6px 18px rgba(124,58,237,0.18);
+    }
+
+    /* Content text block */
+    .content{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-radius:10px;
+      padding:18px;
+      color:var(--text);
+      font-size:15px;
+      line-height:1.55;
+      border:1px solid rgba(255,255,255,0.02);
+      white-space:pre-wrap; /* preserve line breaks exactly as provided */
+    }
+
+    /* Two-column layout for some parts if needed */
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+    }
+
+    /* Footer */
+    footer{
+      margin-top:30px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Mobile */
+    @media (max-width:900px){
+      .wrap{ margin:96px 18px 80px; }
+      .grid-2{ grid-template-columns:1fr; }
+      nav.nav{ display:none; } /* simplified mobile header */
+    }
+
+    /* Floating sidebar nav for mobile (small) */
+    .mobile-nav{
+      display:none;
+    }
+    @media(max-width:900px){
+      .mobile-nav{
+        display:flex;
+        gap:10px;
+        position:fixed;
+        bottom:18px;
+        left:50%;
+        transform:translateX(-50%);
+        background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        padding:8px;
+        border-radius:999px;
+        border:1px solid rgba(255,255,255,0.03);
+        box-shadow:0 8px 30px rgba(2,6,23,0.6);
+        z-index:1000;
+      }
+      .mobile-nav a{ color:var(--muted); font-size:13px; padding:6px 10px; text-decoration:none; }
+    }
+
+    /* Smooth transitions */
+    a,button{transition:all .18s ease}
+    .btn{
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      color:white;
+      padding:8px 12px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      text-decoration:none;
+      display:inline-block;
+    }
+
+    /* subtle separators */
+    .sep{height:1px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); margin:18px 0;border-radius:2px}
+  </style>
+</head>
+<body>
+
+  <header class="topbar" role="banner">
+    <div class="brand">
+      <div class="logo">D & C</div>
+      <div>
+        <h1>Proyecto de Investigación – David y Carlos, 9° grado</h1>
+        <p>Resumen ejecutivo: Importancia de los espacios recreativos</p>
+      </div>
+    </div>
+
+    <nav class="nav" role="navigation" aria-label="Navegación principal">
+      <a href="#inicio" class="active">Inicio</a>
+      <a href="#cap1">Capítulo 1</a>
+      <a href="#cap2">Capítulo 2</a>
+      <a href="#cap3">Capítulo 3</a>
+      <a href="#cap4">Capítulo 4</a>
+      <a href="#cap5">Capítulo 5</a>
+    </nav>
+  </header>
+
+  <main class="wrap" role="main">
+    <!-- Hero / Inicio -->
+    <section id="inicio" class="card hero">
+      <div>
+        <p class="title-big">Resumen ejecutivo</p>
+        <p class="subtitle">Tema: Importancia de los espacios recreativos para la prevención de la delincuencia en los alumnos de tercer ciclo del colegio La Sagrada Familia de Nazareth.</p>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+        <div style="min-width:220px;">
+        <div style="text-align:right;">
+          <a class="btn" href="#cap1">Ir a Capítulo 1</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="sep"></div>
+
+    <!-- Capítulo 1 -->
+    <section id="cap1" class="card">
+      <div class="section-title">
+        <span class="dot" aria-hidden></span>
+        <h2>Capítulo 1: planteamiento del problema</h2>
+      </div>
+
+      <div class="content" aria-labelledby="cap1">
+
+En El Salvador, la delincuencia juvenil constituye una de las principales 
+problemáticas sociales que impactan tanto a las comunidades como también a 
+las instituciones. Factores como, la pobreza, la desintegración familiar, la 
+influencia de pandillas y la falta de oportunidades recreativas han hecho que 
+los jóvenes recaigan a estos actos delictivos y sean propensos a malos tratos o a 
+exclusiones. Frente a esta situación, se planteó la siguiente interrogante: 
+
+¿Cómo influye la falta y el deterioro de los espacios recreativos en la convivencia 
+y en la prevención de conductas delictivas en los estudiantes del Colegio La 
+Sagrada Familia de Nazareth? 
+
+Justificamos que la investigación toma relevancia al considerar que los espacios 
+recreativos si son necesarios para la formación de valores y la convivencia entre 
+los estudiantes. Más allá del entretenimiento, estas áreas contribuyen a 
+entornos de socialización que fomentan el respeto, la cooperación y la solución 
+pacífica de conflictos. 
+
+Los objetivos de nuestra investigación son: 
+
+Objetivo general: Proponer mejorar la calidad de los espacios recreativos del 
+Colegio La Sagrada Familia de Nazareth para promover una mejor convivencia 
+entre los estudiantes de tercer ciclo y prevenir conductas conflictivas o delictivas. 
+
+Objetivos específicos 
+
+·Proponer la expansión y modernización de las áreas recreativas, priorizando 
+la seguridad y la inclusión. 
+
+·Delimitar áreas de juegos y diseñar una mejor distribución de tiempos de recreo 
+para reducir conflictos. 
+
+·Recomendar estrategias de gestión escolar que fortalezcan el uso pedagógico 
+y recreativo de dichos espacios. 
+
+Hipótesis general: Desarrollar e implementar mejoras en los espacios 
+recreativos, Disminuirá las posibilidades de conflictos entre los estudiantes del 
+Colegio La Sagrada Familia De Nazaret 
+
+Hipótesis especifica: Desarrollar e implementar una mejora de los espacios 
+recreativos, hará que mejoren el estado de ánimo de los estudiantes del Colegio 
+La Sagrada Familia De Nazareth. 
+      </div>
+    </section>
+
+    <!-- Capítulo 2 -->
+    <section id="cap2" class="card">
+      <div class="section-title">
+        <span class="dot" aria-hidden></span>
+        <h2>Capítulo 2: marco teórico</h2>
+      </div>
+
+      <div class="content" aria-labelledby="cap2">
+
+Nuestro marco teórico abarca 9 puntos fundamentales para entender y dar a 
+conocer un poco más a fondo acerca del contexto detrás de la delincuencia 
+juvenil tanto a nivel nacional como a nivel de El Colegio La Sagrada Familia de 
+Nazareth los cuales son: 
+
+·Contexto de la delincuencia juvenil en El Salvador.  
+
+·Impacto de la delincuencia juvenil en la sociedad. 
+
+· Importancia de los espacios recreativos en la prevención de la delincuencia en 
+El Salvador.  
+
+·Beneficios de los espacios recreativos. 
+
+· Aspectos importantes que condicionan a los jóvenes en la convivencia de los 
+espacios recreativos.  
+
+·Avances y nuevas tendencias de la importancia de los espacios creativos en la 
+prevención de la delincuencia juvenil en El Salvador.  
+
+·Niveles de intervención en la prevención del delito con el deporte.  
+
+·Diseño e implementación de los programas. 
+
+· Seguimiento, evaluación y aprendizaje.  
+      </div>
+    </section>
+
+    <!-- Capítulo 3 -->
+    <section id="cap3" class="card">
+      <div class="section-title">
+        <span class="dot" aria-hidden></span>
+        <h2>Capítulo 3: metodología</h2>
+      </div>
+
+      <div class="content" aria-labelledby="cap3">
+
+En nuestra investigación observamos a fondo las actitudes de los estudiantes de 
+tercer ciclo lo cual nos hiso tomar la siguiente metodología: 
+
+Se aplicó un enfoque cualitativo para comprender cómo perciben los 
+estudiantes los espacios recreativos. A través de observaciones, charlas y 
+encuestas, se buscó identificar patrones de comportamiento, emociones y 
+relaciones sociales. Este enfoque permite conocer a profundidad la realidad de 
+los alumnos, sin generalizar resultados, pero sí interpretando su contexto. 
+
+El objetivo es proponer mejoras que favorezcan la convivencia y reduzcan 
+conflictos como peleas o aislamiento, observando cómo los jóvenes se relacionan 
+entre ellos y con los espacios de la institución. 
+
+Se utilizó un diseño correlacional para explorar la relación entre el uso de 
+espacios recreativos y la prevención de conductas problemáticas. Aunque no se 
+reporta delincuencia dentro del colegio, sí se han observado conflictos internos. 
+
+Este diseño permite analizar factores como edad, nivel escolar, presión social o 
+estrés, y cómo estos influyen en el uso de los espacios. También se identifican 
+patrones entre la falta de áreas recreativas y el aumento de peleas, gritos o 
+aislamiento. El enfoque ayuda a generar propuestas efectivas para mejorar la 
+convivencia escolar. 
+
+De igual forma se emplearon encuestas digitales a través de Google Forms 
+dirigidas a estudiantes de tercer ciclo. Estas permitieron obtener opiniones clave 
+sobre los espacios recreativos y su influencia en la convivencia. 
+
+Tras la recolección, los datos fueron organizados con estadística descriptiva: 
+gráficas, tablas y categorías. Luego, se interpretaron los resultados en función 
+de los objetivos, buscando comprender cómo estos espacios influyen en la 
+conducta juvenil y la prevención de conflictos. 
+      </div>
+    </section>
+
+    <!-- Capítulo 4 -->
+    <section id="cap4" class="card">
+      <div class="section-title">
+        <span class="dot" aria-hidden></span>
+        <h2>Capítulo 4: recolección y análisis de datos</h2>
+      </div>
+
+      <div class="content" aria-labelledby="cap4"> 
+        
+Con las encuestas aplicadas a los estudiantes de tercer ciclo, las respuestas 
+obtenidas nos dieron una idea clara de cómo ellos mismos perciben el papel que 
+juegan los espacios recreativos en su vida, las encuestan están conformadas por 
+10 preguntas cerradas y 1 abierta las cuales dicen: 
+
+1. ¿Utilizas a menudo los espacios recreativos que brinda la institución? 
+
+El (26.4%) de los estudiantes respondieron que utilizan mucho los espacios 
+recreativos del colegio, el (40.3%) respondieron que utilizan muy poco ciertos 
+espacios, y el (33.3%) retoman que no suelen frecuentarlos tanto. 
+
+2. ¿Has participado en actividades físicas y deportivas en la institución? 
+
+El (66.7%) de los estudiantes respondieron que la actividad donde más han 
+participado es el fútbol, el (25%) respondieron que voleibol, y el (8.3%) 
+respondieron basquetbol. 
+
+3. ¿Consideras que el uso de ciertas áreas recreativas disminuye la probabilidad 
+de que estudiantes de la institución cometan actos malos? 
+
+El (33.3%) de los estudiantes piensan que las peleas, el (20.8%) piensa que los 
+insultos son los que disminuyen y el (8.3%) de los estudiantes piensan los robos, 
+pero sin embargo el (37.5%) opinan que todos estos actos se disminuyen a la 
+vez. 
+
+4. ¿Los docentes de la institución promueven la recreación por medio de los 
+espacios recreativos de manera positiva? 
+
+El (73.6%) de los estudiantes de tercer ciclo piensan que los profesores imparten 
+la recreación positivamente, el (4.2%) opinan que los promueven de manera 
+negativa, pero el (22.2%) opina que no lo hacen. 
+
+5. ¿Crees que se deberían mejorar los espacios recreativos en la institución? 
+
+El (54.2%) de los votantes manifestaron que se deberían mejorar todos los 
+aspectos que son: la vegetación, el diseño y la señalización, pero un (4.2%) 
+prefiere mejorar solo la señalización, el (9.7%) de estudiantes eligen la 
+vegetación y un (31.9%) prefiere el diseño. 
+
+6. ¿Consideras que los espacios recreativos ayudan a prevenir la violencia en la 
+institución? 
+
+: El (38.9%) de los estudiantes votaron que los espacios si ayudan a prevenir la 
+violencia, el (25%) dijo que no ayudan y un (36.1%) dijo que tal vez pueden 
+evitar la violencia. La mayoría de estudiantes piensan que los espacios 
+recreativos si ayudan a prevenir la violencia lo cual crea un ambiente sano en 
+la institución. 
+
+7. ¿Has observado algún acto de violencia como insultos, peleas o golpes en la 
+institución? 
+
+La mayoría de estudiantes de tercer ciclo (40.3%) han observado estos tipos de 
+violencias, pero el (59.7% en total) solo han observado un tipo de violencia, ya 
+sea solo peleas (16.7%), insultos (38.9%) o solo robos (4.2%). 
+
+8. ¿Crees que los deportes o las actividades recreativas ayudan a canalizar la 
+agresividad en los estudiantes? 
+
+Un (44.4%) piensan que la agresividad si se canaliza por medio de los espacios 
+recreativos, el (31.9%) de estudiantes piensa que la agresividad tal vez se pueda 
+canalizar a través de los espacios recreativos, y el (23.6%) de estudiantes piensa 
+que no sirven para canalizar la agresividad. 
+
+9. ¿Sabes con quien acudir cuando se presentan actos de violencia como golpes 
+o insultos? 
+
+La mayoría de estudiantes (73.6%) dicen que a quien deben acudir cuando se 
+presenten situaciones de violencia es al coordinador o coordinadora, pero un 
+(26.4% en total) dicen que se tiene que acudir a la directora (18.1%) o 
+subdirectora (8.3%) de el colegio. 
+
+10. ¿Estás de acuerdo que la violencia entre jóvenes se puede disminuir por 
+medio de deportes o actividades organizadas? 
+
+En el total de encuestados obtuvimos que un (40.3%) de alumnos de tercer ciclo 
+están de acuerdo que las actividades organizadas por los maestros hacen que 
+la violencia disminuya, el (37.5%) dice que probablemente esté de acuerdo y el 
+(22.2%) que no está de acuerdo. 
+      </div>
+
+      
+    </section>
+
+    <!-- Continuación Capítulo 4 (análisis adicional) -->
+    <section class="card" aria-labelledby="cap4b" style="margin-top:18px">
+      <div class="section-title">
+        <span class="dot" aria-hidden></span>
+        <h2>Capítulo 4 (continuación)</h2>
+      </div>
+
+      <div class="content" id="cap4b">
+
+La pregunta que mas relevancia tuvo en nuestra investigación fue la siguiente: 
+
+11- ¿Qué papel proporcionan los espacios recreativos en la prevención de la 
+violencia escolar y por qué? 
+
+Análisis: La mayoría de los estudiantes (81%) considera que los espacios 
+recreativos cumplen un papel importante en la prevención de la violencia 
+escolar, ya que permiten una mejor convivencia, reducen el estrés y enseñan a 
+resolver conflictos. No obstante, un grupo menor (19%) opinó lo contrario o no 
+respondió adecuadamente, lo cual muestra que aún se deben mejorar aspectos 
+como la supervisión y el uso adecuado de estos espacios. En general, se reconoce 
+su valor como herramienta para fortalecer la convivencia escolar. 
+
+Con un 81% de acuerdo y un 19% en desacuerdo.
+
+      </div>
+    </section>
+
+    <!-- Capítulo 5 -->
+    <section id="cap5" class="card">
+      <div class="section-title">
+        <span class="dot" aria-hidden></span>
+        <h2>Capítulo 5: conclusiones y recomendaciones</h2>
+      </div>
+
+      <div class="content" aria-labelledby="cap5">
+
+Conclusión: 
+
+La evidencia que se mostró anteriormente demuestra que aunque la 
+delincuencia no sea tan contante en la institución si se observan actos 
+como robos insultos entre muchas cosas más y que los estudiantes 
+quieren una mejora a los espacios recreativos para que puedan 
+socializar de manera correcta nosotros concluimos que los alumnos 
+pueden lograr una convivencia sana y sin violencia gracias a los 
+espacios recreativos que brinda la institución dándoles un retoque de 
+diseño y de señalización para que los estudiantes utilicen de buena 
+manera dichos espacios recreativos  
+
+Recomendaciónes: 
+
+Con la obtención de los datos recolectados de nuestra encuesta 
+podemos dar las siguientes recomendaciones:  
+
+ Promover el buen uso de ciertas áreas como lo son la cancha y 
+otros espacios para que sean utilizados de buena manera y que 
+los estudiantes no realicen actos delictivos o practiquen la 
+violencia en estas áreas porque eso afecta a los demás 
+estudiantes al escuchar muchos insultos o ver peleas. 
+
+ Fomentar valores como el respeto e incitar a practicarlos con sus 
+compañeros para que los estudiantes tengan una buena 
+relación entre si y no peleen en la institución esto hace que los 
+estudiantes conozcan los valores que deben practicar y saber 
+cómo tener una buena convivencia.  
+
+ Fortalecer las relaciones entre estudiantes para que así se eviten 
+conflictos entre otros grados y que no hayan peleas o insultos en la 
+institución esto para que se respeten entre si y no ocasiones 
+problemas más graves como peleas entre compañeros o hasta 
+amenazas entre ellos. 
+      </div>
+    </section>
+
+    <footer>
+      <p>Archivo original: "Resumen ejecutivo david y carlos 9 grado.pdf"</p>
+      <p> • David & Carlos • 9° grado</p>
+    </footer>
+  </main>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" role="navigation" aria-label="Navegación móvil">
+    <a href="#inicio">Inicio</a>
+    <a href="#cap1">1</a>
+    <a href="#cap2">2</a>
+    <a href="#cap3">3</a>
+    <a href="#cap4">4</a>
+    <a href="#cap5">5</a>
+  </div>
+
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(!target) return;
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        // update active link (desktop nav)
+        document.querySelectorAll('nav.nav a').forEach(x=>x.classList.remove('active'));
+        const navLink = document.querySelector('nav.nav a[href="'+this.getAttribute('href')+'"]');
+        if(navLink) navLink.classList.add('active');
+      });
+    });
+
+    // Highlight nav item on scroll
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('nav.nav a');
+    const opts = { root: null, rootMargin: '0px 0px -60% 0px', threshold: 0 };
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){
+          navLinks.forEach(l=> l.classList.remove('active'));
+          const link = document.querySelector('nav.nav a[href="#'+ent.target.id+'"]');
+          if(link) link.classList.add('active');
+        }
+      });
+    }, opts);
+    sections.forEach(s=> io.observe(s));
+  </script>
+
+</body>
+</html>
